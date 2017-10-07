@@ -3,13 +3,13 @@
 #include <stdlib.h>
 
 //recupération du nom de la commune
-int main(int argc, char const *argv[]) {
+int main(int argc, char* argv[]) {
   //char nomCom = ;
-  char commune = "petit-canal";
+  char* commune[] = {"petit-canal"};
   FILE* fichier = fopen("listeCom.txt","r");
   if (fichier != NULL){
     fscanf(fichier,"%s",&commune);
-    printf("%s\n",commune );
+    printf("%s\n",*commune );
   }
   /*
   fscanf(ficher,"%s",&nomCom);
