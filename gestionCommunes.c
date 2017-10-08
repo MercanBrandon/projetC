@@ -20,12 +20,8 @@ void ajouterCommune();
 
 typedef struct {
   char* nom;
+  int code_postale;
 } commune, *pcommune;
-
-typedef struct {
-  int code;
-  pcommune commune;
-} code_postale, *pcode_postale;
 
 int retour = 1;
 char chaine[TAILLE_MAX] = "";
@@ -130,8 +126,8 @@ void afficherCommunes(){
 }
 
 void rechercherCommuneNom(){
-    char nom_commune_a_rechercher[1024] = "";
-    char commune[1024] = "";
+    char nom_commune_a_rechercher[255] = "";
+    char nom_commune[255] = "";
     int code_postale = 0;
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
@@ -143,12 +139,12 @@ void rechercherCommuneNom(){
     fichier = fopen("communes.txt","r+");
 
     if(fichier != NULL){
-        while(fscanf(fichier,"%s %d",&commune,&code_postale) != EOF){
-            if(strcmp(commune,nom_commune_a_rechercher)==0){
+        while(fscanf(fichier,"%s %d",&nom_commune,&code_postale) != EOF){
+            if(strcmp(nom_commune,nom_commune_a_rechercher)==0){
                 system("clear");
                 printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
                 printf(" Recherche par nom de commune : \n\n");
-                printf(" Resultat de la recherche :  - %s %d",commune,code_postale);
+                printf(" Resultat de la recherche :  - %s %d",nom_commune,code_postale);
                 break;
             }
         }
@@ -160,9 +156,9 @@ void rechercherCommuneNom(){
 
 void rechercherCommuneCp(){
     int cp_commune_a_rechercher = 0;
-    char cp_commune_a_rechercher_str[1024] = "";
+    char cp_commune_a_rechercher_str[255] = "";
     int code_postale = 0;
-    char commune[1024] = "";
+    char nom_commune[255] = "";
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
     printf(" Recherche par code postale : \n");
@@ -179,9 +175,9 @@ void rechercherCommuneCp(){
         printf(" Recherche par code postale : %d \n\n",cp_commune_a_rechercher);
         printf(" Resultat de la recherche : \n");
         if(strlen(cp_commune_a_rechercher_str)==5){
-            while(fscanf(fichier,"%s %d",&commune,&code_postale) != EOF){
+            while(fscanf(fichier,"%s %d",&nom_commune,&code_postale) != EOF){
                 if(code_postale == cp_commune_a_rechercher){
-                    printf(" - %s %d\n",commune,code_postale);
+                    printf(" - %s %d\n",nom_commune,code_postale);
                     break;
                 }
             }
@@ -193,22 +189,26 @@ void rechercherCommuneCp(){
 }
 
 void ajouterCommune(){
-    char nom_commune[1024];
-    int cp_commune = 0;
+    char nom_commune_a_ajouter[255];
+    int cp_commune_a_ajouter = 0;
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
     printf(" Ajouter une commune : \n");
     printf(" Nom de la commune : ");
-    scanf("%s",nom_commune);
+    scanf("%s",nom_commune_a_ajouter);
     printf(" Code postal de la commune : ");
-    scanf("%d",&cp_commune);
+    scanf("%d",&cp_commune_a_ajouter);
+
+    pcommune commune = malloc(sizeof(commune));
+	(*commune).nom = nom_commune_a_ajouter;
+	(*commune).code_postale = cp_commune_a_ajouter;
+
 
     FILE* fichier = NULL;
     fichier = fopen("communes.txt","a");
 
     if(fichier != NULL){
-        printf("\nTEST : %s TEST : %d",nom_commune,cp_commune);
-    fprintf(fichier,"\n%s %d",nom_commune,cp_commune);
+        fprintf(fichier,"\n%s %d",commune->nom, commune->code_postale);
         fclose(fichier);
     }else{
         printf(" Impossible d'ouvrir le fichier!");
