@@ -1,0 +1,32 @@
+LesAbymes 97139
+Anse-Bertrand 97121
+Baie-Mahault 97122
+Baillif 97123
+Basse-Terre 97100
+Bouillante 97125
+Capesterre-Belle-Eau 97130
+Capesterre-de-Marie-Galante 97140
+Deshaies 97126
+La Desirade 97127
+Le Gosier 97190
+Gourbeyre 97113
+Goyave 97128
+Grand-Bourg 97112
+Lamentin 97129
+Morne-a-l'Eau 97111
+LeMoule 97160
+Petit-Bourg 97170
+Petit-Canal 97131
+Pointe-a-Pitre 97110
+Pointe-Noire 97116
+Port-Louis 97117
+Saint-Claude 97120
+Saint-Francois 97118
+Saint-Louis 97134
+Sainte-Anne 97180
+Sainte-Rose 97115
+Terre-de-Bas 97136
+Terre-de-Haut 97137
+Trois-Rivieres 97114
+Vieux-Fort 97141
+Vieux-Habitants 97119
