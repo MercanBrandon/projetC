@@ -1,6 +1,6 @@
 /***************************************/
 /**           Realisation c           **/
-/**   MARIVINT Yvann & BRANDON xxxxx  **/
+/**  MARIVINT Yvann & MERCAN Brandon  **/
 /***************************************/
 #include <stdio.h>
 #include <stdlib.h>
