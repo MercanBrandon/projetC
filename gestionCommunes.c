@@ -9,6 +9,7 @@
 
 #define TAILLE_MAX 1000 // TAILLE MAX LECTURE DU FICHIER
 
+// INITIALISATION DES FONCTIONS
 void initialiser(int argc);
 int menu();
 int menuRechercherCommune();
@@ -17,24 +18,28 @@ void afficherCommunes();
 void rechercherCommuneNom();
 void rechercherCommuneCp();
 void ajouterCommune();
+// FIN INITIALISATION
 
 typedef struct {
     char* nom;
     int code_postale;
 } commune, *pcommune;
 
+// VARIABLES GLOBALE
 int retour = 1;
 char chaine[TAILLE_MAX] = "";
+// FIN VARIABLES GLOBALE
 
+// DEBUT MAIN
 int main (int argc, char** argv) {
     initialiser(argc);
-    do{
-        switch(menu()){
-            case 1 :
+    while(retour != 0){
+        switch(menu()){ // AFFICHE LE MENU PRINCIPALE, RETOURNE LE CHOIX UTILISATEUR
+            case 1 : // AFFICHE LES COMMUNES
                 afficherCommunes();
             break;
 
-            case 2:
+            case 2: // RECHERCHE UNE COMMUNE
                 if(menuRechercherCommune() == 1){
                     rechercherCommuneNom();
                 }else{
@@ -42,7 +47,7 @@ int main (int argc, char** argv) {
                 }
             break;
 
-            case 3:
+            case 3: // AJOUTE UNE COMMUNE AU FICHIER .TXT
                 ajouterCommune();
             break;
         }
@@ -54,9 +59,14 @@ int main (int argc, char** argv) {
         printf("\n Votre choix : ");
         scanf("%d",&retour);
         //FIN RETOUR MENU//
-    }while(retour != 2);
+    }
   return 0;
 }
+// FIN MAIN
+
+/***************************************/
+/**            FONCTIONS              **/
+/***************************************/
 
 void initialiser(int argc){
     if(argc > 1){
@@ -64,7 +74,7 @@ void initialiser(int argc){
         exit(1);
     }
 }
-
+// DEBUT FONCTIONS MENU
 int menu(){
     int choix = 0;
     while(choix < 1 || choix > 3 ){
@@ -108,7 +118,9 @@ int menuAjouterCommune(){
     }
     return choix;
 }
+//FIN MENU
 
+// CASE 1 AFFICHER COMMUNE
 void afficherCommunes(){
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
@@ -116,7 +128,7 @@ void afficherCommunes(){
     FILE* fichier  = NULL;
     fichier = fopen("communes.txt", "r+");
     if(fichier != NULL){
-        while(fgets(chaine, TAILLE_MAX, fichier) != NULL){
+        while(fgets(chaine, TAILLE_MAX, fichier) != NULL){ // LECTURE & AFFICHAGE DU FICHIER ENTIER, NE DEPASSE PAS 1000 CHARACTERE
             printf(" - %s",chaine);
         }
         fclose(fichier);
@@ -124,10 +136,12 @@ void afficherCommunes(){
         printf(" Impossible d'ouvrir le fichier!");
     }
 }
+// FIN CASE 1
 
+// CASE 2 RECHERCHER COMMUNE
 void rechercherCommuneNom(){
-    char nom_commune_a_rechercher[255] = "";
-    char nom_commune[255] = "";
+    char nom_commune_a_rechercher[40] = "";
+    char nom_commune[40] = "";
     int code_postale = 0;
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
@@ -139,8 +153,8 @@ void rechercherCommuneNom(){
     fichier = fopen("communes.txt","r+");
 
     if(fichier != NULL){
-        while(fscanf(fichier,"%s %d",&nom_commune,&code_postale) != EOF){
-            if(strcmp(nom_commune,nom_commune_a_rechercher)==0){
+        while(fscanf(fichier,"%s %d",&nom_commune,&code_postale) != EOF){ // EOF = FIN DU FICHIER
+            if(strcmp(nom_commune,nom_commune_a_rechercher)==0){ // STRCMP() COMPARE DEUX CHAINES DE CARACTERE, RENVOIE 0 SI IDENTITQUE
                 system("clear");
                 printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
                 printf(" Recherche par nom de commune : \n\n");
@@ -157,9 +171,9 @@ void rechercherCommuneNom(){
 
 void rechercherCommuneCp(){
     int cp_commune_a_rechercher = 0;
-    char cp_commune_a_rechercher_str[255] = "";
+    char cp_commune_a_rechercher_str[40] = "";
     int code_postale = 0;
-    char nom_commune[255] = "";
+    char nom_commune[40] = "";
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
     printf(" Recherche par code postale : \n");
@@ -169,14 +183,14 @@ void rechercherCommuneCp(){
     FILE* fichier = NULL;
     fichier = fopen("communes.txt","r+");
 
-    sprintf(cp_commune_a_rechercher_str, "%d", cp_commune_a_rechercher);
+    sprintf(cp_commune_a_rechercher_str, "%d", cp_commune_a_rechercher); // CONVERSION VARAIBLE INT EN CHAINE DE CARACTERE
     if(fichier != NULL){
         system("clear");
         printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
         printf(" Recherche par code postale : %d \n\n",cp_commune_a_rechercher);
         printf(" Resultat de la recherche : \n");
-        if(strlen(cp_commune_a_rechercher_str)==5){
-            while(fscanf(fichier,"%s %d",&nom_commune,&code_postale) != EOF){
+        if(strlen(cp_commune_a_rechercher_str)==5){ // VERIFICATION SI IL S'AGIT BIEN D'UN CODE POSTAL DE 5 CHIFFRES
+            while(fscanf(fichier,"%s %d",&nom_commune,&code_postale) != EOF){ // EOF = FIN DU FICHIER
                 if(code_postale == cp_commune_a_rechercher){
                     printf(" - %s %d\n",nom_commune,code_postale);
                     break;
@@ -188,9 +202,11 @@ void rechercherCommuneCp(){
         printf(" Impossible d'ouvrir le fichier!");
     }
 }
+// FIN CASE 2
 
+// CASE 3 AJOUTER UNE COMMUNE
 void ajouterCommune(){
-    char nom_commune_a_ajouter[255];
+    char nom_commune_a_ajouter[40];
     int cp_commune_a_ajouter = 0;
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
@@ -200,12 +216,12 @@ void ajouterCommune(){
     printf(" - Code postal de la commune : ");
     scanf("%d",&cp_commune_a_ajouter);
 
-    pcommune commune = malloc(sizeof(commune));
-	(*commune).nom = nom_commune_a_ajouter;
-	(*commune).code_postale = cp_commune_a_ajouter;
+    pcommune commune = malloc(sizeof(commune));     // UTILISATION DE LA STRUCTURE "COMMUNE" EN ALLOCATION DYNAMIQUE
+	(*commune).nom = nom_commune_a_ajouter;         // LE NOM
+	(*commune).code_postale = cp_commune_a_ajouter; // LE CODE POSTALE
 
     FILE* fichier = NULL;
-    fichier = fopen("communes.txt","a");
+    fichier = fopen("communes.txt","a");            // LECTURE DU FICHIER EN "a" POUR L'ECRITURE EN FIN DE FICHIER
 
     if(fichier != NULL){
         fprintf(fichier,"\n%s %d",commune->nom, commune->code_postale);
@@ -215,3 +231,4 @@ void ajouterCommune(){
     }
     free(commune);
 }
+// FIN CASE 3
