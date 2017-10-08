@@ -7,8 +7,8 @@ Bouillante 97125
 Capesterre-Belle-Eau 97130
 Capesterre-de-Marie-Galante 97140
 Deshaies 97126
-La Desirade 97127
-Le Gosier 97190
+LaDesirade 97127
+LeGosier 97190
 Gourbeyre 97113
 Goyave 97128
 Grand-Bourg 97112
