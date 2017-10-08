@@ -19,8 +19,8 @@ void rechercherCommuneCp();
 void ajouterCommune();
 
 typedef struct {
-  char* nom;
-  int code_postale;
+    char* nom;
+    int code_postale;
 } commune, *pcommune;
 
 int retour = 1;
@@ -35,11 +35,11 @@ int main (int argc, char** argv) {
             break;
 
             case 2:
-              if(menuRechercherCommune() == 1){
+                if(menuRechercherCommune() == 1){
                     rechercherCommuneNom();
-              }else{
+                }else{
                     rechercherCommuneCp();
-              }
+                }
             break;
 
             case 3:
@@ -49,8 +49,8 @@ int main (int argc, char** argv) {
         //RETOUR AU MENU
         printf("\n\n");
         printf(" Revenir au menu?\n");
-        printf("\n 1 - Oui\n");
-        printf(" 2 - Non\n");
+        printf("\n 0 - Non\n");
+        printf(" 1 - Oui\n");
         printf("\n Votre choix : ");
         scanf("%d",&retour);
         //FIN RETOUR MENU//
@@ -144,7 +144,8 @@ void rechercherCommuneNom(){
                 system("clear");
                 printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
                 printf(" Recherche par nom de commune : \n\n");
-                printf(" Resultat de la recherche :  - %s %d",nom_commune,code_postale);
+                printf(" Resultat de la recherche : \n\n");
+                printf(" - %s %d\n",nom_commune,code_postale);
                 break;
             }
         }
@@ -193,16 +194,15 @@ void ajouterCommune(){
     int cp_commune_a_ajouter = 0;
     system("clear");
     printf(" GESTION DES COMMUNES DE GUADELOUPE\n\n");
-    printf(" Ajouter une commune : \n");
-    printf(" Nom de la commune : ");
+    printf(" Ajouter une commune : \n\n");
+    printf(" - Nom de la commune : ");
     scanf("%s",nom_commune_a_ajouter);
-    printf(" Code postal de la commune : ");
+    printf(" - Code postal de la commune : ");
     scanf("%d",&cp_commune_a_ajouter);
 
     pcommune commune = malloc(sizeof(commune));
 	(*commune).nom = nom_commune_a_ajouter;
 	(*commune).code_postale = cp_commune_a_ajouter;
-
 
     FILE* fichier = NULL;
     fichier = fopen("communes.txt","a");
@@ -213,4 +213,5 @@ void ajouterCommune(){
     }else{
         printf(" Impossible d'ouvrir le fichier!");
     }
+    free(commune);
 }
